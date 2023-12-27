@@ -6,7 +6,15 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 22:09:33 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/25 22:09:44 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/27 10:05:02 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "philo.h"
+
+int	main(int argc, char **argv)
+{
+	t_ph	ph;
+	//memset() // init
+	return (0);
+}
