@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/efmacm23/Documents/42/philo",
+      "program": "/Users/efmacm23/Documents/42/philo/build/Debug/outDebug"
+    }
+  ]
+}
