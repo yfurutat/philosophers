@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:51:34 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 19:22:05 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 20:27:07 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,13 @@ int	main(int argc, char **argv)
 	ret = cleanup(&data);
 	return (ret);
 }
+
+// __attribute__((destructor))
+// static void	destructor()
+// {
+// 	system("sudo leaks -q philo");
+// 	// system("leaks -q test.sh");
+// }
 		// {
 		// 	destroy_data(data);
 		// 	return (err_id);

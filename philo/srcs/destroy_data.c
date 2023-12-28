@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 19:45:29 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 18:18:36 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 20:19:28 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	destroy_data(t_data *data)
 			free(data->threads);
 		if (data->forks)
 			destroy_mutex_array(data->forks, (size_t)data->pr.num_philos);
+		if (data->dine)
+			destroy_mutex_array(data->dine, (size_t)data->pr.num_philos);
 	}
 	return (errno);
 }

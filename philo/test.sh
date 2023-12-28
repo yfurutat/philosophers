@@ -6,19 +6,19 @@
 # 4. time_to_sleep
 # 5. number_of_times_each_philosopher_must_eat
 
-ARGV1="200"
-ARGV2="800"
-ARGV3="300"
-ARGV4="300"
-ARGV5="100"
-# ARGV3="100@"
-# ARGV3="opqij&"
+N_PHILOS="200"
+T_DIE="800"
+T_EAT="200"
+T_SLEEP="200"
+MIN_T_EAT="7"
+# T_EAT="100@"
+# T_EAT="opqij&"
 
-# ARGV1="2147483647"
-# ARGV2="2147483647"
-# ARGV3="2147483647"
-# ARGV4="2147483647"
-# ARGV5="2147483647"
+# N_PHILOS="2147483647"
+# T_DIE="2147483647"
+# T_EAT="2147483647"
+# T_SLEEP="2147483647"
+# MIN_T_EAT="2147483647"
 
 # ARGS1="./philo \
 # 2147483647 \
@@ -36,7 +36,7 @@ ARGV5="100"
 
 # echo ${ARGS1}
 # $ARGS1
-CMD="./philo $ARGV1 $ARGV2 $ARGV3 $ARGV4 $ARGV5"
+CMD="./philo $N_PHILOS $T_DIE $T_EAT $T_SLEEP $MIN_T_EAT"
 
 echo ${CMD}
 $CMD
