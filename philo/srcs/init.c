@@ -1,0 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/27 15:44:24 by efmacm23          #+#    #+#             */
+/*   Updated: 2023/12/28 03:39:11 by efmacm23         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+static pthread_mutex_t	*_create_mutex_array(size_t num);
+
+int	init(t_data *data)
+{
+    size_t  num;
+
+    num = (size_t)data->pr.num_philos;
+	data->philos = malloc(num * sizeof(t_ph));
+	if (data->philos == NULL)
+		return(E_ALLOC);
+	data->threads = malloc(num * sizeof(pthread_t));
+	if (data->threads == NULL)
+		return(E_ALLOC);
+	data->forks = _create_mutex_array(num);
+	if (data->forks == NULL)
+		return(E_ALLOC);
+	data->dine = _create_mutex_array(num);
+	if (data->dine == NULL)
+		return(E_ALLOC);
+    if (pthread_mutex_init(&data->pr.coffin_lock, NULL))
+		return(E_ALLOC);
+	return (OK);
+}
+
+static pthread_mutex_t	*_create_mutex_array(size_t num)
+{
+	pthread_mutex_t	*ptr;
+	size_t			i;
+	int				err_id;
+
+	if (num == 0)
+		return (NULL);
+	ptr = malloc(num * sizeof(pthread_mutex_t));
+	if (ptr == NULL)
+		return(NULL);
+	i = 0;
+	while (i < num)
+	{
+        err_id = pthread_mutex_init(&ptr[i], NULL);
+		if (err_id != OK)
+		{
+			destroy_mutex_array(ptr, i);
+			return (NULL);
+		}
+		i++;
+	}
+	return (ptr);
+}
