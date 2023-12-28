@@ -77,7 +77,7 @@ files			:	$(SRC_PATH) $(INC_PATH)
 	@touch $(INC_PATH)philo.h $(SRC)
 
 commit			:
-	git add $(SRC) $(UTILS) Makefile $(INC_PATH)*.h test.sh
+	git add $(SRC) $(UTILS) Makefile $(INC_PATH)*.h test.sh output.txt
 	git commit -m "commit through makefile"
 	git status
 

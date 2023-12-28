@@ -1,0 +1,19 @@
+./philo 10 100 100 100 5
+0 1 has taken a fork
+0 2 has taken a fork
+0 3 has taken a fork
+0 4 has taken a fork
+0 4 has taken a fork
+0 4 is eating
+0 6 has taken a fork
+0 6 has taken a fork
+0 6 is eating
+0 8 has taken a fork
+0 8 has taken a fork
+0 8 is eating
+0 10 has taken a fork
+102 4 is sleeping
+102 3 has taken a fork
+102 3 is eating
+102 5 has taken a fork
+102 4 died
