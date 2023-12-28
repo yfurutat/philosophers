@@ -2,11 +2,12 @@ NAME			:=	philo
 
 MAIN_FILE		:=	main.c \
 					act.c \
-					destroy_data.c \
+					destroy.c \
 					init.c \
-					monitor.c \
 					parse_args.c \
+					party.c \
 					print_get_msg.c
+#					monitor.c
 
 # ARGS			:=	parse_args.c
 

@@ -6,20 +6,16 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:54:09 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 18:50:58 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:39:06 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# define POSITIVE (1)
-# define NEGATIVE (-1)
-# define ACT_FORK "has taken a fork"
-# define ACT_EAT "is eating"
-# define ACT_SLEEP "is sleeping"
-# define ACT_THINK "is thinking"
-# define ACT_DEAD "died"
+/*
+	HEADERS
+*/
 
 // # include "philo_utils.h"
 # include <limits.h>
@@ -36,8 +32,21 @@
 // pthread_mutex_init, pthread_mutex_destroy, 
 // pthread_mutex_lock, pthread_mutex_unlock
 
+/*
+	MACROS
+*/
 
-// philo_id
+# define POSITIVE (1)
+# define NEGATIVE (-1)
+# define ACT_FORK "has taken a fork"
+# define ACT_EAT "is eating"
+# define ACT_SLEEP "is sleeping"
+# define ACT_THINK "is thinking"
+# define ACT_DEAD "died"
+
+/*
+	TYPEDEF
+*/
 
 typedef uintmax_t t_time;
 
@@ -53,7 +62,6 @@ typedef struct s_param {
 }	t_param;
 	// time_t 		start_time;
 	// size_t		last;
-
 
 typedef struct s_philo {
 	long long		id;
@@ -73,10 +81,6 @@ typedef struct s_data {
 	pthread_mutex_t	*forks;
 }	t_data;
 
-typedef enum e_atol {
-	FLOW = 1,
-}	t_atol;
-
 typedef enum e_error {
 	OK = 0,
 	E_EMPTY = -1,
@@ -90,30 +94,34 @@ typedef enum e_error {
 	FULL = -9,
 }	t_err;
 
+typedef enum e_atol {
+	FLOW = 1,
+}	t_atol;
+
+/*
+	FUNCTIONS
+*/
+
+int			prep_party(int argc, char **argv, t_data *data);
+int			start_party(t_data *data);
+int			monitor_party(t_data *data);
+int			party_over(t_data *data);
+
+int			parse_args(int argc, char **argv, t_param *pr);
+int			init(t_data *data);
+void		*act(void *param);
+
+void		destroy_mutex_array(pthread_mutex_t *ptr, size_t num);
+int			destroy_data(t_data *data);
+int			print_msg(t_ph *philo, const char *action);
+time_t		get_time(int *err_ptr);
+
 int			ft_isspace(int chr);
 int			ft_isdigit(int chr);
 int			ft_aredigit_strs(char **strs);
 long long	ft_atoll(const char *str);
+
 // bool		ft_isdigit_str(char *str);
 // size_t	ft_strlen(const char *str);
-
-void	*act(void *param);
-void	destroy_mutex_array(pthread_mutex_t *ptr, size_t num);
-int		destroy_data(t_data *data);
-time_t	get_time(int *err_ptr);
-int		init(t_data *data);
-int		parse_args(int argc, char **argv, t_param *pr);
-int		print_msg(t_ph *philo, const char *action);
-
-int		prep(int argc, char **argv, t_data *data);
-int		start(t_data *data);
-int		monitor(t_data *data);
-int		cleanup(t_data *data);
-
-// [timestamp_in_ms] X has taken a fork
-// [timestamp_in_ms] X is eating
-// [timestamp_in_ms] X is sleeping
-// [timestamp_in_ms] X is thinking
-// [timestamp_in_ms] X died
 
 #endif
