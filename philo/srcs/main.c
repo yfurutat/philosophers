@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:51:34 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 18:49:22 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 19:22:05 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ int	cleanup(t_data *data)
 	return (err_id);
 }
 
-// 23L
+// 22L
 int	start(t_data *data)
 {
 	size_t	i;
 	int		err_id;
 
 	i = 0;
+	err_id = OK;
 	while (i < (size_t)data->pr.num_philos)
 	{
     	data->philos[i].dine = &data->dine[i];
@@ -49,23 +50,14 @@ int	start(t_data *data)
 		else
 			data->philos[i].fork_l = &data->forks[i + 1];
 		err_id = pthread_create(&data->threads[i], NULL, act, &data->philos[i]);
-		if (err_id)
-		{
-			destroy_data(data);
-			return (err_id);
-		}
+		if (err_id != OK)
+			break ;
 		i++;
 	}
-	return (OK);
+	return (err_id);
 }
-		// err_id = pthread_detach(data.threads[i]);
-		// if (err_id)
-		// {
-		// 	destroy_data(&data);
-		// 	return (-1);
-		// }
 
-// 22L
+// 11L
 int	prep(int argc, char **argv, t_data *data)
 {
 	int	err_id;
@@ -73,26 +65,15 @@ int	prep(int argc, char **argv, t_data *data)
     memset(data, '\0', sizeof(t_data));
     err_id = parse_args(argc, argv, &(data->pr));
 	if (err_id != OK)
-    {
-
 		return (err_id);
-    }
     err_id = init(data);
 	if (err_id != OK)
-	{
-		destroy_data(data);
 		return (err_id);
-	}
     data->pr.start_time = get_time(NULL);
-    if (err_id != OK)
-	{
-		destroy_data(data);
-		return (err_id);
-	}
-	return (OK);
+	return (err_id);
 }
 
-// 14L
+// 20L
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -100,16 +81,32 @@ int	main(int argc, char **argv)
 
 	ret = prep(argc, argv, &data);
 	if (ret != OK)
+	{
+		destroy_data(&data);
 		return (ret);
+	}
 	ret = start(&data);
 	if (ret != OK)
+	{
+		destroy_data(&data);
 		return (ret);
-	usleep(500);
+	}
+	usleep(1000);
 	while (ret == OK)
 		ret = monitor(&data);
 	ret = cleanup(&data);
 	return (ret);
 }
+		// {
+		// 	destroy_data(data);
+		// 	return (err_id);
+		// }
+		// err_id = pthread_detach(data.threads[i]);
+		// if (err_id)
+		// {
+		// 	destroy_data(&data);
+		// 	return (-1);
+		// }
 
 // // 14L
 // int	main(int argc, char **argv)
