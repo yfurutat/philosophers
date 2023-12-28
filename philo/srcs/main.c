@@ -6,25 +6,11 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:51:34 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 18:39:02 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:49:22 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-// #include "../includes/philo.h"
-
-// int main()
-// {
-//     printf("errno: %d\n", errno);
-//     errno = EINVAL;
-//     printf("errno: %d\n", errno);
-//     printf("EBUSY: %d\n", EBUSY);
-//     printf("EINVAL: %d\n", EINVAL);
-//     printf("OK: %d\n", OK);
-//     printf("E_EMPTY: %d\n", E_EMPTY);
-//     printf("E_INVALID_ARGC: %d\n", E_INVALID_ARGC);
-//     return (0);
-// }
 
 // 13L
 int	cleanup(t_data *data)
@@ -45,7 +31,7 @@ int	cleanup(t_data *data)
 }
 
 // 23L
-int	foo(t_data *data)
+int	start(t_data *data)
 {
 	size_t	i;
 	int		err_id;
@@ -109,84 +95,103 @@ int	prep(int argc, char **argv, t_data *data)
 // 14L
 int	main(int argc, char **argv)
 {
-	t_data	        data;
-	int 	        ret;
-	// size_t	        i;
+	t_data	data;
+	int		ret;
 
-    // memset(&data, '\0', sizeof(t_data));
-    // ret = parse_args(argc, argv, &data.pr);
-	// if (ret)
-    // {
-
-	// 	return (-1);
-    // }
-    // ret = init(&data);
-	// if (ret != OK)
-	// {
-	// 	destroy_data(&data);
-	// 	return (-1);
-	// }
-    // data.pr.start_time = get_time(NULL);
-    // if (ret != OK)
-	// {
-	// 	destroy_data(&data);
-	// 	return (-1);
-	// }
 	ret = prep(argc, argv, &data);
 	if (ret != OK)
 		return (ret);
-	ret = foo(&data);
+	ret = start(&data);
 	if (ret != OK)
 		return (ret);
-	// i = 0;
-	// while (i < (size_t)data.pr.num_philos)
-	// {
-    // 	data.philos[i].dine = &data.dine[i];
-    // 	data.philos[i].last_eat_time = data.pr.start_time;
-	// 	data.philos[i].id = i + 1;
-	// 	data.philos[i].pr = &data.pr;
-	// 	data.philos[i].fork_r = &data.forks[i];
-	// 	if (i + 1 == (size_t)data.pr.num_philos)
-	// 		data.philos[i].fork_l = &data.forks[0];
-	// 	else
-	// 		data.philos[i].fork_l = &data.forks[i + 1];
-	// 	ret = pthread_create(&data.threads[i], NULL, act, &data.philos[i]);
-	// 	if (ret)
-	// 	{
-	// 		destroy_data(&data);
-	// 		return (-1);
-	// 	}
-	// 	// ret = pthread_detach(data.threads[i]);
-	// 	// if (ret)
-	// 	// {
-	// 	// 	destroy_data(&data);
-	// 	// 	return (-1);
-	// 	// }
-	// 	i++;
-	// }
 	usleep(500);
-	// while (1)
-	// {
-	// 	if (monitor(&data) != OK)
-	// 		break ;
-	// }
 	while (ret == OK)
 		ret = monitor(&data);
 	ret = cleanup(&data);
-	// i = 0;
-	// while (i < (size_t)data.pr.num_philos)
-	// {
-	// 	ret = pthread_join(data.threads[i], NULL);
-	// 	if (ret)
-	// 	{
-	// 		destroy_data(&data);
-	// 		return (-1);
-	// 	}
-	// 	i++;
-	// }
-    // destroy_data(&data);
 	return (ret);
 }
+
+// // 14L
+// int	main(int argc, char **argv)
+// {
+// 	t_data	        data;
+// 	int 	        ret;
+// 	// size_t	        i;
+
+//     // memset(&data, '\0', sizeof(t_data));
+//     // ret = parse_args(argc, argv, &data.pr);
+// 	// if (ret)
+//     // {
+
+// 	// 	return (-1);
+//     // }
+//     // ret = init(&data);
+// 	// if (ret != OK)
+// 	// {
+// 	// 	destroy_data(&data);
+// 	// 	return (-1);
+// 	// }
+//     // data.pr.start_time = get_time(NULL);
+//     // if (ret != OK)
+// 	// {
+// 	// 	destroy_data(&data);
+// 	// 	return (-1);
+// 	// }
+// 	ret = prep(argc, argv, &data);
+// 	if (ret != OK)
+// 		return (ret);
+// 	ret = start(&data);
+// 	if (ret != OK)
+// 		return (ret);
+// 	// i = 0;
+// 	// while (i < (size_t)data.pr.num_philos)
+// 	// {
+//     // 	data.philos[i].dine = &data.dine[i];
+//     // 	data.philos[i].last_eat_time = data.pr.start_time;
+// 	// 	data.philos[i].id = i + 1;
+// 	// 	data.philos[i].pr = &data.pr;
+// 	// 	data.philos[i].fork_r = &data.forks[i];
+// 	// 	if (i + 1 == (size_t)data.pr.num_philos)
+// 	// 		data.philos[i].fork_l = &data.forks[0];
+// 	// 	else
+// 	// 		data.philos[i].fork_l = &data.forks[i + 1];
+// 	// 	ret = pthread_create(&data.threads[i], NULL, act, &data.philos[i]);
+// 	// 	if (ret)
+// 	// 	{
+// 	// 		destroy_data(&data);
+// 	// 		return (-1);
+// 	// 	}
+// 	// 	// ret = pthread_detach(data.threads[i]);
+// 	// 	// if (ret)
+// 	// 	// {
+// 	// 	// 	destroy_data(&data);
+// 	// 	// 	return (-1);
+// 	// 	// }
+// 	// 	i++;
+// 	// }
+// 	usleep(500);
+// 	// while (1)
+// 	// {
+// 	// 	if (monitor(&data) != OK)
+// 	// 		break ;
+// 	// }
+// 	while (ret == OK)
+// 		ret = monitor(&data);
+// 	ret = cleanup(&data);
+// 	// i = 0;
+// 	// while (i < (size_t)data.pr.num_philos)
+// 	// {
+// 	// 	ret = pthread_join(data.threads[i], NULL);
+// 	// 	if (ret)
+// 	// 	{
+// 	// 		destroy_data(&data);
+// 	// 		return (-1);
+// 	// 	}
+// 	// 	i++;
+// 	// }
+//     // destroy_data(&data);
+// 	return (ret);
+// }
 		// pthread_detach(philosophers[i]);
 		// printf("%zd\n", i);
 	    // pthread_create(&philosophers[i], NULL, void *(*start_routine)(void *), void *arg);
@@ -242,3 +247,18 @@ int	main(int argc, char **argv)
 // pthread_create, pthread_detach, pthread_join, 
 // pthread_mutex_init, pthread_mutex_destroy, 
 // pthread_mutex_lock, pthread_mutex_unlock
+
+// #include "../includes/philo.h"
+
+// int main()
+// {
+//     printf("errno: %d\n", errno);
+//     errno = EINVAL;
+//     printf("errno: %d\n", errno);
+//     printf("EBUSY: %d\n", EBUSY);
+//     printf("EINVAL: %d\n", EINVAL);
+//     printf("OK: %d\n", OK);
+//     printf("E_EMPTY: %d\n", E_EMPTY);
+//     printf("E_INVALID_ARGC: %d\n", E_INVALID_ARGC);
+//     return (0);
+// }
