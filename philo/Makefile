@@ -4,7 +4,9 @@ MAIN_FILE		:=	main.c \
 					act.c \
 					destroy_data.c \
 					init.c \
-					parse_args.c
+					monitor.c \
+					parse_args.c \
+					print_get_msg.c
 
 # ARGS			:=	parse_args.c
 

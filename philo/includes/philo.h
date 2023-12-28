@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:54:09 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 03:58:09 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:36:05 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,13 @@ void	destroy_mutex_array(pthread_mutex_t *ptr, size_t num);
 int		destroy_data(t_data *data);
 time_t	get_time(int *err_ptr);
 int		init(t_data *data);
-int		parse_args(int argc, char **argv, t_param *ph);
+int		parse_args(int argc, char **argv, t_param *pr);
 int		print_msg(t_ph *philo, const char *action);
 int		monitor(t_data *data);
+int	cleanup(t_data *data);
+
+int	foo(t_data *data);
+int	prep(int argc, char **argv, t_data *data);
 
 // [timestamp_in_ms] X has taken a fork
 // [timestamp_in_ms] X is eating

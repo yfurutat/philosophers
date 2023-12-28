@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:51:34 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 03:56:36 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:39:02 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,106 +26,166 @@
 //     return (0);
 // }
 
-int	monitor(t_data *data)
+// 13L
+int	cleanup(t_data *data)
 {
-	size_t		i;
-	long long	full_bellies;
+	size_t	i;
+	int		err_id;
 
 	i = 0;
-	// while (1)
-	full_bellies = 0;
 	while (i < (size_t)data->pr.num_philos)
 	{
-		pthread_mutex_lock(data->philos[i].dine);
-		if (get_time(NULL) - data->philos[i].last_eat_time > (t_time)data->pr.time_to_die)
-		{
-			print_msg(&data->philos[i], ACT_DEAD);
-			data->pr.the_end_status = true;
-			pthread_mutex_unlock(&data->pr.coffin_lock);
-			pthread_mutex_unlock(data->philos[i].dine);
-			return (E_DEAD);
-		}
-		if (data->philos[i].eat_times == data->pr.min_times_to_eat)
-			full_bellies++;
-		pthread_mutex_unlock(data->philos[i].dine);
+		err_id = pthread_join(data->threads[i], NULL);
+		if (err_id != OK)
+			break ;
 		i++;
 	}
-	if (full_bellies == data->pr.num_philos)
-		return (FULL);
-	return (OK);
+    destroy_data(data);
+	return (err_id);
 }
 
-int	main(int argc, char **argv)
+// 23L
+int	foo(t_data *data)
 {
-	t_data	        data;
-	size_t	        i;
-	int 	        err_id;
+	size_t	i;
+	int		err_id;
 
-    memset(&data, '\0', sizeof(t_data));
-    err_id = parse_args(argc, argv, &data.pr);
-	if (err_id)
-    {
-
-		return (-1);
-    }
-    err_id = init(&data);
-	if (err_id != OK)
-	{
-		destroy_data(&data);
-		return (-1);
-	}
-
-    data.pr.start_time = get_time(NULL);
-    if (err_id != OK)
-	{
-		destroy_data(&data);
-		return (-1);
-	}
 	i = 0;
-	while (i < (size_t)data.pr.num_philos)
+	while (i < (size_t)data->pr.num_philos)
 	{
-    	data.philos[i].dine = &data.dine[i];
-    	data.philos[i].last_eat_time = data.pr.start_time;
-		data.philos[i].id = i + 1;
-		data.philos[i].pr = &data.pr;
-		data.philos[i].fork_r = &data.forks[i];
-		if (i + 1 == (size_t)data.pr.num_philos)
-			data.philos[i].fork_l = &data.forks[0];
+    	data->philos[i].dine = &data->dine[i];
+    	data->philos[i].last_eat_time = data->pr.start_time;
+		data->philos[i].id = i + 1;
+		data->philos[i].pr = &data->pr;
+		data->philos[i].fork_r = &data->forks[i];
+		if (i + 1 == (size_t)data->pr.num_philos)
+			data->philos[i].fork_l = &data->forks[0];
 		else
-			data.philos[i].fork_l = &data.forks[i + 1];
-		err_id = pthread_create(&data.threads[i], NULL, act, &data.philos[i]);
+			data->philos[i].fork_l = &data->forks[i + 1];
+		err_id = pthread_create(&data->threads[i], NULL, act, &data->philos[i]);
 		if (err_id)
 		{
-			destroy_data(&data);
-			return (-1);
+			destroy_data(data);
+			return (err_id);
 		}
+		i++;
+	}
+	return (OK);
+}
 		// err_id = pthread_detach(data.threads[i]);
 		// if (err_id)
 		// {
 		// 	destroy_data(&data);
 		// 	return (-1);
 		// }
-		i++;
+
+// 22L
+int	prep(int argc, char **argv, t_data *data)
+{
+	int	err_id;
+
+    memset(data, '\0', sizeof(t_data));
+    err_id = parse_args(argc, argv, &(data->pr));
+	if (err_id != OK)
+    {
+
+		return (err_id);
+    }
+    err_id = init(data);
+	if (err_id != OK)
+	{
+		destroy_data(data);
+		return (err_id);
 	}
+    data->pr.start_time = get_time(NULL);
+    if (err_id != OK)
+	{
+		destroy_data(data);
+		return (err_id);
+	}
+	return (OK);
+}
+
+// 14L
+int	main(int argc, char **argv)
+{
+	t_data	        data;
+	int 	        ret;
+	// size_t	        i;
+
+    // memset(&data, '\0', sizeof(t_data));
+    // ret = parse_args(argc, argv, &data.pr);
+	// if (ret)
+    // {
+
+	// 	return (-1);
+    // }
+    // ret = init(&data);
+	// if (ret != OK)
+	// {
+	// 	destroy_data(&data);
+	// 	return (-1);
+	// }
+    // data.pr.start_time = get_time(NULL);
+    // if (ret != OK)
+	// {
+	// 	destroy_data(&data);
+	// 	return (-1);
+	// }
+	ret = prep(argc, argv, &data);
+	if (ret != OK)
+		return (ret);
+	ret = foo(&data);
+	if (ret != OK)
+		return (ret);
+	// i = 0;
+	// while (i < (size_t)data.pr.num_philos)
+	// {
+    // 	data.philos[i].dine = &data.dine[i];
+    // 	data.philos[i].last_eat_time = data.pr.start_time;
+	// 	data.philos[i].id = i + 1;
+	// 	data.philos[i].pr = &data.pr;
+	// 	data.philos[i].fork_r = &data.forks[i];
+	// 	if (i + 1 == (size_t)data.pr.num_philos)
+	// 		data.philos[i].fork_l = &data.forks[0];
+	// 	else
+	// 		data.philos[i].fork_l = &data.forks[i + 1];
+	// 	ret = pthread_create(&data.threads[i], NULL, act, &data.philos[i]);
+	// 	if (ret)
+	// 	{
+	// 		destroy_data(&data);
+	// 		return (-1);
+	// 	}
+	// 	// ret = pthread_detach(data.threads[i]);
+	// 	// if (ret)
+	// 	// {
+	// 	// 	destroy_data(&data);
+	// 	// 	return (-1);
+	// 	// }
+	// 	i++;
+	// }
 	usleep(500);
-	while (1)
-	{
-		if (monitor(&data) != OK)
-			break ;
-	}
-	i = 0;
-	while (i < (size_t)data.pr.num_philos)
-	{
-		err_id = pthread_join(data.threads[i], NULL);
-		if (err_id)
-		{
-			destroy_data(&data);
-			return (-1);
-		}
-		i++;
-	}
-    destroy_data(&data);
-	return (0);
+	// while (1)
+	// {
+	// 	if (monitor(&data) != OK)
+	// 		break ;
+	// }
+	while (ret == OK)
+		ret = monitor(&data);
+	ret = cleanup(&data);
+	// i = 0;
+	// while (i < (size_t)data.pr.num_philos)
+	// {
+	// 	ret = pthread_join(data.threads[i], NULL);
+	// 	if (ret)
+	// 	{
+	// 		destroy_data(&data);
+	// 		return (-1);
+	// 	}
+	// 	i++;
+	// }
+    // destroy_data(&data);
+	return (ret);
 }
 		// pthread_detach(philosophers[i]);
 		// printf("%zd\n", i);

@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:46:04 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/27 22:25:34 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:20:06 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void		_set_param(char **argv, t_param *pr);
 static int		_check_range(t_param *pr);
 
+// 10L
 int	parse_args(int argc, char **argv, t_param *pr)
 {
 	int	err_id;
@@ -35,6 +36,7 @@ int	parse_args(int argc, char **argv, t_param *pr)
 /*                                                                  */
 /* **************************************************************** */
 
+// 7L
 static void	_set_param(char **argv, t_param *pr)
 {
 	pr->num_philos = ft_atoll(argv[1]);
@@ -46,6 +48,7 @@ static void	_set_param(char **argv, t_param *pr)
 		pr->min_times_to_eat = ft_atoll(argv[5]);
 }
 
+// 11L
 static int	_check_range(t_param *pr)
 {
 	if (pr->num_philos <= 0 || pr->num_philos > INT_MAX)

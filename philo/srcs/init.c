@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:44:24 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 03:39:11 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:17:08 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static pthread_mutex_t	*_create_mutex_array(size_t num);
 
+// 18L
 int	init(t_data *data)
 {
     size_t  num;
@@ -36,6 +37,7 @@ int	init(t_data *data)
 	return (OK);
 }
 
+// 21L
 static pthread_mutex_t	*_create_mutex_array(size_t num)
 {
 	pthread_mutex_t	*ptr;
